@@ -35,10 +35,11 @@ extension UINavigationController {
 }
 
 struct buttonChoiceStyle: ViewModifier {
+    var color : String
     func body(content: Content) -> some View {
         content
             .padding()
-            .background(Color("Myblue"))
+            .background(Color(color))
             .cornerRadius(10)
             .shadow(color: Color("shadow"), radius: 3, x: 0.5, y: 0.5)
         

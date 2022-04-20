@@ -13,7 +13,7 @@ import CryptoKit
 struct DetailStruct : Identifiable {
     
     var id = UUID()
-    var clinicName : String
+    var therapistName : String
     var image : String
     var type: String
     var price: String
@@ -23,7 +23,9 @@ struct DetailStruct : Identifiable {
     var qualifactions: String
     var language: String
     var Description: String
-    var clientPrivateKey: P256.KeyAgreement.PrivateKey
+    var clientName: String
+    var clientPhone: String
+    var clientPrivateKeyString: String
     var therapistPublicKey: P256.KeyAgreement.PublicKey
     
 }
@@ -32,18 +34,14 @@ struct DetailStruct : Identifiable {
 struct DetailView: View {
     
 
-    //let detailViewItems: DetailStruct
+    let detailViewItems: DetailStruct
     
-    //@Binding var isPresented: Bool
     @State var isPresentingConfirmation = false
-    @State var clientPrivateKeyString : String
-    @State var therapistPublicKey : P256.KeyAgreement.PublicKey
-
     @EnvironmentObject var appointment : Appointments
     @EnvironmentObject var awsData : AWSData
     
     
-    @State var encyptedMessage = Data()
+    //@State var encyptedMessage = Data()
 
 
 
@@ -52,23 +50,23 @@ struct DetailView: View {
         VStack{
             VStack {
                 HStack {
-//                    Image(detailViewItems.image)
-//                            .resizable()
-//                            .clipShape(Circle())
-//                            .shadow(radius: 10)
-//                            .frame(width: 100, height: 100)
-//                        .padding(5)
+                    Image(detailViewItems.image)
+                            .resizable()
+                            .clipShape(Circle())
+                            .shadow(color: Color("shadow"), radius: 3, x: 0.5, y: 0.5)
+                            .frame(width: 100, height: 100)
+                        .padding(5)
                         
                         VStack(alignment:.leading){
-                            Text("detailViewItems.clinicName")
+                            Text(detailViewItems.therapistName)
                                 .font(.title3)
                                 .foregroundColor(Color("text"))
-                            Text("detailViewItems.type")
+                            Text(detailViewItems.type)
                                 .font(.footnote)
                                 .fontWeight(.light)
                             
                         }
-                        .padding(.top,15)
+                        //.padding(.top,5)
                         Spacer()
                     
                     }
@@ -104,7 +102,7 @@ struct DetailView: View {
                             .foregroundColor(Color("text"))
                             .bold()
                         
-                        Text("detailViewItems.price")
+                        Text(detailViewItems.price)
                         Spacer()
                     }.padding(.horizontal)
                     
@@ -118,27 +116,27 @@ struct DetailView: View {
                         Text("Method:")
                             .foregroundColor(Color("text"))
                             .bold()
-//                        HStack {
-//                            if detailViewItems.inperson ?? false {
-//                        Text("In-Person")
-//                            }
-//                            if detailViewItems.remotely ?? false {
-//                                Text("Remotely")
-//                            }
-//                        }
+                        HStack {
+                            if detailViewItems.inperson ?? false {
+                        Text("In-Person")
+                            }
+                            if detailViewItems.remotely ?? false {
+                                Text("Remotely")
+                            }
+                        }
                         Spacer()
                     }.padding(.horizontal)
                 }
                 .padding(.top)
                 
-                VStack(spacing:15){
+                VStack(spacing:10){
                     
                     HStack{
                         
                         Text("Experience:")
                             .bold()
                         Spacer()
-                        Text("detailViewItems.experience")
+                        Text(detailViewItems.experience)
                         
                     }.padding(.horizontal)
                     
@@ -148,7 +146,7 @@ struct DetailView: View {
                         Text("Qualifactions:")
                             .bold()
                         Spacer()
-                        Text("detailViewItems.qualifactions")
+                        Text(detailViewItems.qualifactions)
                         
                     }.padding(.horizontal)
                     
@@ -158,7 +156,7 @@ struct DetailView: View {
                         Text("Language")
                             .bold()
                         Spacer()
-                        Text("detailViewItems.language")
+                        Text(detailViewItems.language)
                         
                     }.padding(.horizontal)
                     
@@ -171,7 +169,8 @@ struct DetailView: View {
 
                         }
                         HStack {
-                            Text("detailViewItems.Description")
+                            Text(detailViewItems.Description)
+                                .offset(y:-20)
                             Spacer()
                         }
                         .padding()
@@ -184,41 +183,24 @@ struct DetailView: View {
                 Spacer()
                 
                 Button {
-                    
+                    self.isPresentingConfirmation.toggle()
+
                 } label: {
                     Text("Book a Session")
                         .frame(width: 250)
                         .foregroundColor(.white)
-                        .buttonStyle(buttonChoiceStyle())
-                        .onTapGesture {
-                            self.isPresentingConfirmation.toggle()
-                            
-                            
-                        }
+                        .buttonStyle(buttonChoiceStyle(color: "Myblue"))
                     
                 }.background(
-                    NavigationLink(destination: ConfirmAppointmentView(isPresented: $isPresentingConfirmation, confirmView: ConfirmationStruct(clinicName: "", clientPrivateKeyString: clientPrivateKeyString, therapistPublicKey: therapistPublicKey)), isActive: $isPresentingConfirmation) {}
+//                    NavigationLink(destination: ConfirmAppointmentView(isPresented: $isPresentingConfirmation, confirmView: ConfirmationStruct(clinicName: detailViewItems.therapistName, clientPrivateKeyString: detailViewItems.clientPrivateKeyString, therapistPublicKey: detailViewItems.therapistPublicKey)), isActive: $isPresentingConfirmation) {}
+                    
+                    NavigationLink(destination: ConfirmAppointmentView(isPresented: $isPresentingConfirmation,confirmView: ConfirmationStruct(clientName: detailViewItems.clientName, clientPhone: detailViewItems.clientPhone, clientPrivateKeyString: detailViewItems.clientPrivateKeyString, therapistName: detailViewItems.therapistName, therapistPublicKey: detailViewItems.therapistPublicKey)), isActive: $isPresentingConfirmation){}
                 )
                 
                 Spacer()
                 
             }
-            
-            Text("Encrypt")
-                .onTapGesture {
-                    
-                    let clientPrivateKey = try! importPrivateKey(clientPrivateKeyString)
-                    let deriveSymmetricKey = try! deriveSymmetricKey(privateKey: clientPrivateKey, publicKey: therapistPublicKey)
-                    let messageEncrypted = try! encrypt(text: "Hiiiiiii", symmetricKey: deriveSymmetricKey)
-                    appointment.appointmentArray.append(AppointmentStruct(messageEncrypted: messageEncrypted, therapistPublicKey: therapistPublicKey, clientPublicKey: clientPrivateKey.publicKey))
-     
-                }
-            
-            Text("Check")
-                .onTapGesture {
-            
-                }
-            
+
         }
 .navigationBarTitleDisplayMode(.inline)
         
@@ -233,75 +215,12 @@ struct DetailView: View {
 
 
 
-
-extension DetailView {
-
-    
-    /*
-    private func encryptionFunc(therapistPublicKey: Any) {
+struct DetailView_Previews: PreviewProvider {
+    static var previews: some View {
         
-        
-
-        let protocolSalt = "Hello, playground".data(using: .utf8)!
-        let message = "Sealed box OPENED!!!"
-
-
-        let therapistPublicKey = therapistPublicKey
-
-        let sSharedSecret = try! detailViewItems.clientPrivateKey.sharedSecretFromKeyAgreement(with: therapistPublicKey as! P256.KeyAgreement.PublicKey)
-        let sSymmetricKey = sSharedSecret.hkdfDerivedSymmetricKey(using: SHA256.self,
-                                                              salt: protocolSalt,
-                                                              sharedInfo: Data(),
-                                                              outputByteCount: 32)
-
-    let nameSensitive = message.data(using: .utf8)!
-
-    let encryptedData = try! ChaChaPoly.seal(nameSensitive, using: sSymmetricKey).combined
-//
-//    print("EncryptedData: ")
-//    print(encryptedData)
-//
-//
-//        print("\n")
-//        print("\n")
-//        print("\n")
-//        print("--Before Adding to Array--")
-//        print("Client Public Key")
-//        print(detailViewItems.clientPrivateKey.publicKey)
-//        print("therapistPublicKey Public Key")
-//        print(detailViewItems.therapistPublicKey)therapistPublicKey
-//        appointment.appointmentArray.append(AppointmentStruct(messageEncrypted: encryptedData, therapistPublicKey: therapistPublicKey as! P256.KeyAgreement.PublicKey, clientPublicKey: detailViewItems.clientPrivateKey.publicKey))
-//        print("----------ADDED----------")
-//        print("\n")
-//        print("\n")
-//        print("\n")
-
-}
-   */
-    
-    func importPrivateKey(_ privateKey: String) throws -> P256.KeyAgreement.PrivateKey {
-        let privateKeyBase64 = privateKey.removingPercentEncoding!
-        let rawPrivateKey = Data(base64Encoded: privateKeyBase64)!
-        return try P256.KeyAgreement.PrivateKey(rawRepresentation: rawPrivateKey)
+        DetailView(detailViewItems: DetailStruct(therapistName: "Alejandra", image: "alej", type: "LMFT", price: "50KD", experience: "3 Years", qualifactions: "M.A", language: "Spanish,English", Description: "", clientName: "", clientPhone: "", clientPrivateKeyString: "", therapistPublicKey: generatePrivateKey().publicKey))
+            .environmentObject(AWSData())
     }
-    
-    func deriveSymmetricKey(privateKey: P256.KeyAgreement.PrivateKey, publicKey: P256.KeyAgreement.PublicKey) throws -> SymmetricKey {
-
-        let sharedSecret = try privateKey.sharedSecretFromKeyAgreement(with: publicKey)
-        let symmetricKey = sharedSecret.hkdfDerivedSymmetricKey(
-            using: SHA256.self,
-            salt: "My Key Agreement Salt".data(using: .utf8)!,
-            sharedInfo: Data(),
-            outputByteCount: 32
-        )
-        return symmetricKey
-    }
-    func encrypt(text: String, symmetricKey: SymmetricKey) throws -> String {
-        let textData = text.data(using: .utf8)!
-        let encrypted = try AES.GCM.seal(textData, using: symmetricKey)
-        return encrypted.combined!.base64EncodedString()
-    }
-
 }
 
 

@@ -86,7 +86,7 @@ struct DetailClinicView: View {
                 }, label: {
                     Text("Next")
                         .foregroundColor(.white)
-                        .buttonStyle(buttonChoiceStyle())
+                        .buttonStyle(buttonChoiceStyle(color: "Myblue"))
                     .shadow(radius: 3)
                 })
                     .padding()
@@ -96,7 +96,7 @@ struct DetailClinicView: View {
                 HStack {
                     Text("Send")
                         .foregroundColor(.white)
-                        .buttonStyle(buttonChoiceStyle())
+                        .buttonStyle(buttonChoiceStyle(color: "Myblue"))
                         .shadow(radius: 3)
                         .onTapGesture {
                             print("Heloooo!")

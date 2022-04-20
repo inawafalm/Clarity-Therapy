@@ -19,15 +19,58 @@ struct ContentView: View {
     @EnvironmentObject var awsData : AWSData
     @EnvironmentObject var therapistApp : TherapistApp
     @EnvironmentObject var myUserClient : MyUserClient
+    
+    @State private var myUser : MyUser?
    
     var body: some View {
         NavigationView {
             VStack{
+                HStack {
+                    Button {
+
+                        myUser = myUserClient.myUserClient[0]
+                        
+                    } label: {
+                        Text("Nawaf")
+                            .font(.callout)
+                            .frame(width: 50)
+                            .foregroundColor(.white)
+                            .buttonStyle(buttonChoiceStyle(color: "Myblue"))
+                        
+                    }
+                    Button {
+
+                        myUser = myUserClient.myUserClient[1]
+
+                        
+                    } label: {
+                        Text("Lisa")
+                            .font(.callout)
+                            .frame(width: 50)
+                            .foregroundColor(.white)
+                            .buttonStyle(buttonChoiceStyle(color: "Myblue"))
+                        
+                    }
+                }
                 ScrollView(.vertical) {
                 ForEach(awsData.therapistsArray) { therapist in
-                    let privateKey = myUserClient.myUserClient[0].privateKey
-                    NavigationLink(destination:DetailView(clientPrivateKeyString: privateKey, therapistPublicKey: therapist.therapistPublicKey)){
-                        TherapistCardView(clinicName: therapist.name, image: therapist.name, type: "Test", inperson: true, remotely: true)
+                    NavigationLink(destination:
+                                    DetailView(detailViewItems:
+                                                DetailStruct(therapistName: therapist.name,
+                                                             image: therapist.image,
+                                                             type: therapist.type, price: therapist.price,
+                                                             remotely:therapist.remotely,
+                                                             inperson:therapist.inperson,
+                                                             experience: therapist.experience,
+                                                             qualifactions: therapist.qualifactions,
+                                                             language:therapist.language,
+                                                             Description: therapist.Description,
+                                                             clientName:myUser!.name,
+                                                             clientPhone:myUser!.phone,
+                                                             clientPrivateKeyString:myUser!.privateKey,
+                                                             therapistPublicKey: therapist.therapistPublicKey))
+                    ){
+                        TherapistCardView(clinicName: therapist.name, image: therapist.name, type: therapist.type, inperson: therapist.inperson, remotely: therapist.remotely)
                             .padding(10)
                     }
                 }
@@ -45,6 +88,15 @@ struct ContentView: View {
                     .onTapGesture {
                         var data = TherapistModel()
                         data.name = therapistApp.myUserTherapist[0].name
+                        data.image = therapistApp.myUserTherapist[0].name
+                        data.type = " Licensed Marriage and Family Therapist"
+                        data.price = "50KD - 60min"
+                        data.remotely = true
+                        data.inperson = false
+                        data.experience = "5 Years"
+                        data.qualifactions = "M.A"
+                        data.language = "English"
+                        data.Description = "Kati Morton, LMFT, Master's in Psychology 1M+ on YouTube 2x Best Selling Author (Are u ok? & Traumatized)"
                         data.therapistPublicKey = try! importPrivateKey(therapistApp.myUserTherapist[0].privateKey).publicKey
                         awsData.therapistsArray.append(data)
                     }

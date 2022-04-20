@@ -18,6 +18,7 @@
 		052273F1280B537D00581B62 /* MyUserClientVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052273F0280B537D00581B62 /* MyUserClientVM.swift */; };
 		052273F3280B53A800581B62 /* MyUserTherapistVM - TherapistApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052273F2280B53A800581B62 /* MyUserTherapistVM - TherapistApp.swift */; };
 		0561B02D28048DDD001519F9 /* Cryptography funcs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0561B02C28048DDD001519F9 /* Cryptography funcs.swift */; };
+		056DD102280F47CC00075A53 /* ClientCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056DD101280F47CC00075A53 /* ClientCard.swift */; };
 		057E3ABB27C418EE00D73976 /* Cryptography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057E3ABA27C418EE00D73976 /* Cryptography.swift */; };
 		058DD56527ED1C8C00D47F5C /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058DD56427ED1C8C00D47F5C /* DetailView.swift */; };
 		058DD56727EDDF0300D47F5C /* ConfirmAppointmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058DD56627EDDF0300D47F5C /* ConfirmAppointmentView.swift */; };
@@ -63,6 +64,7 @@
 		052273F0280B537D00581B62 /* MyUserClientVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyUserClientVM.swift; sourceTree = "<group>"; };
 		052273F2280B53A800581B62 /* MyUserTherapistVM - TherapistApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyUserTherapistVM - TherapistApp.swift"; sourceTree = "<group>"; };
 		0561B02C28048DDD001519F9 /* Cryptography funcs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cryptography funcs.swift"; sourceTree = "<group>"; };
+		056DD101280F47CC00075A53 /* ClientCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCard.swift; sourceTree = "<group>"; };
 		057E3ABA27C418EE00D73976 /* Cryptography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cryptography.swift; sourceTree = "<group>"; };
 		058DD56427ED1C8C00D47F5C /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		058DD56627EDDF0300D47F5C /* ConfirmAppointmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmAppointmentView.swift; sourceTree = "<group>"; };
@@ -128,6 +130,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		056DD100280F46F200075A53 /* TherapistApp */ = {
+			isa = PBXGroup;
+			children = (
+				05A5A6A127FA3649002DE91B /* TherapistView.swift */,
+				056DD101280F47CC00075A53 /* ClientCard.swift */,
+			);
+			path = TherapistApp;
+			sourceTree = "<group>";
+		};
 		058DD56827EDE72600D47F5C /* Book Group */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,7 +186,7 @@
 			children = (
 				05CB425027AD377100B9860D /* Clarity_TherapyApp.swift */,
 				05A2335227E6333F00C2887D /* AppView.swift */,
-				05A5A6A127FA3649002DE91B /* TherapistView.swift */,
+				056DD100280F46F200075A53 /* TherapistApp */,
 				058DD56827EDE72600D47F5C /* Book Group */,
 				052273ED280B518700581B62 /* ViewModel */,
 				052273EA280B516800581B62 /* Models */,
@@ -358,6 +369,7 @@
 				05A2335327E6333F00C2887D /* AppView.swift in Sources */,
 				051A18DB27BBC7C50040C82A /* nameSensitive.swift in Sources */,
 				058DD56727EDDF0300D47F5C /* ConfirmAppointmentView.swift in Sources */,
+				056DD102280F47CC00075A53 /* ClientCard.swift in Sources */,
 				052273F3280B53A800581B62 /* MyUserTherapistVM - TherapistApp.swift in Sources */,
 				051A18DD27BFA7D50040C82A /* DetailClinicView.swift in Sources */,
 				052273F1280B537D00581B62 /* MyUserClientVM.swift in Sources */,

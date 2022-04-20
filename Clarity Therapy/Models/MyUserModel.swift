@@ -12,6 +12,7 @@ struct MyUser : Identifiable {
     
     var id = UUID()
     var name: String
+    var phone: String
     var privateKey: String
     
 }

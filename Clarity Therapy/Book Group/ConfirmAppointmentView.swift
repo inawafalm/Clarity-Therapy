@@ -13,24 +13,47 @@ import CryptoKit
 struct ConfirmationStruct : Identifiable {
     
     var id = UUID()
-    var clinicName : String
+    var clientName: String
+    var clientPhone : String
     var clientPrivateKeyString: String
+    var therapistName: String
     var therapistPublicKey: P256.KeyAgreement.PublicKey
     
+    
 }
+
+struct EncryptionStruct : Identifiable {
+    
+    var id = UUID()
+    var clientName: String
+    var clientPhone : String
+    var appointmentType: String
+    var time: String
+    var date: String
+    
+}
+
+enum AppointmentType: String {
+    case Remotely = "Remotely"
+    case Inperson = "In person"
+}
+
+
 
 
 struct ConfirmAppointmentView: View {
   
-    @Binding var isPresented: Bool
 //    @State var nextView = false
-
-    let confirmView : ConfirmationStruct
+    @Binding var isPresented: Bool
+    @State var appointmentType = AppointmentType.Inperson.rawValue
     @EnvironmentObject var appointment : Appointments
     @EnvironmentObject var awsData : AWSData
     
-   // @ObservedObject var myUser = Clients()
-
+    @State var selectedDate = ""
+    @State var selectedTime = ""
+    
+    let confirmView : ConfirmationStruct
+    
     
     let columns = [
             GridItem(.adaptive(minimum: 80)),
@@ -55,31 +78,30 @@ struct ConfirmAppointmentView: View {
                 HStack {
                     
                     Button {
-                        
+                        appointmentType = AppointmentType.Inperson.rawValue
                     } label: {
-                        Text("Remote")
+                        Text("In-Person")
                             .bold()
                             .frame(width: 85,height: 15)
                             .foregroundColor(.white)
-                            .buttonStyle(buttonChoiceStyle())
+                            .buttonStyle(appointmentType == AppointmentType.Inperson.rawValue ? buttonChoiceStyle(color: "Myblue") : buttonChoiceStyle(color: "shadow"))
                         
                     }
                     
                     Button {
-                        
+                        appointmentType = AppointmentType.Remotely.rawValue
                     } label: {
                         Text("Remote")
                             .bold()
                             .frame(width: 85,height: 15)
                             .foregroundColor(.white)
-                            .buttonStyle(buttonChoiceStyle())
-                        
+                            .buttonStyle(appointmentType == AppointmentType.Remotely.rawValue ? buttonChoiceStyle(color: "Myblue") : buttonChoiceStyle(color: "shadow"))
+
                     }
                     
                 }
             
             HStack {
-                
                 Text("Selected Date: ")
                     .font(.title3)
                     .bold()
@@ -99,7 +121,10 @@ struct ConfirmAppointmentView: View {
                     .bold()
                     .frame(width: 100,height: 10)
                     .foregroundColor(.white)
-                .buttonStyle(buttonChoiceStyle())
+                .buttonStyle(buttonChoiceStyle(color: "Myblue"))
+                .onTapGesture {
+                    self.selectedDate = "3/22/2021"
+                }
                 Spacer()
             }
                 
@@ -123,7 +148,11 @@ struct ConfirmAppointmentView: View {
                                 .bold()
                                 .frame(width: 75,height: 15)
                                 .foregroundColor(.white)
-                            .buttonStyle(buttonChoiceStyle())
+                            .buttonStyle(buttonChoiceStyle(color: "Myblue"))
+                            
+                            .onTapGesture {
+                                self.selectedTime = item.description
+                            }
                         }
                       
                         
@@ -141,14 +170,18 @@ struct ConfirmAppointmentView: View {
                 
                 let clientPrivateKey = try! importPrivateKey(confirmView.clientPrivateKeyString)
                 let deriveSymmetricKey = try! deriveSymmetricKey(privateKey: clientPrivateKey, publicKey: confirmView.therapistPublicKey)
-                let messageEncrypted = try! encrypt(text: "Hiiiiiii", symmetricKey: deriveSymmetricKey)
-                appointment.appointmentArray.append(AppointmentStruct(messageEncrypted: messageEncrypted, therapistPublicKey: confirmView.therapistPublicKey, clientPublicKey: clientPrivateKey.publicKey))
+                
+                let encrypted = EncryptionStruct(clientName: confirmView.clientName, clientPhone: confirmView.clientPhone, appointmentType: appointmentType, time: selectedTime, date: selectedDate)
+                                
+                let messageEncrypted = try! encrypt(input: encrypted, symmetricKey: deriveSymmetricKey)
+                
+                appointment.appointmentArray.append(AppointmentStruct(messagesEncrypted: messageEncrypted, therapistPublicKey: confirmView.therapistPublicKey, clientPublicKey: clientPrivateKey.publicKey))
                 
             } label: {
                 Text("Confirm")
                     .frame(width: 250)
                     .foregroundColor(.white)
-                    .buttonStyle(buttonChoiceStyle())
+                    .buttonStyle(buttonChoiceStyle(color: "Myblue"))
                 
             }
 
@@ -161,7 +194,7 @@ struct ConfirmAppointmentView: View {
                 Text("Dismiss")
                     .frame(width: 250)
                     .foregroundColor(.white)
-                    .buttonStyle(buttonChoiceStyle())
+                    .buttonStyle(buttonChoiceStyle(color: "Myblue"))
 
             }
             
@@ -172,7 +205,6 @@ struct ConfirmAppointmentView: View {
 //                }, content: {
 //                    TherapistView(isPresented: $nextView)
 //                }))
-            
             
         }.padding()
 
@@ -192,6 +224,6 @@ extension ConfirmAppointmentView {
 
 //struct ConfirmAppointmentView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ConfirmAppointmentView()
+//        ConfirmAppointmentView(isPresented: .constant(true), confirmView: ConfirmationStruct(clinicName: "", clientPrivateKeyString: "", therapistPublicKey: generatePrivateKey().publicKey))
 //    }
 //}

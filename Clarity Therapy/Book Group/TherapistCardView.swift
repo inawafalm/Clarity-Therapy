@@ -44,7 +44,7 @@ struct TherapistCardView: View {
                             Image(image)
                                 .resizable()
                                 .clipShape(Circle())
-                                .shadow(radius: 10)
+                                .shadow(color: Color("shadow"), radius: 3, x: 0.5, y: 0.5)
                                 .frame(width: 75, height: 75)
                             .padding(5)
                             
@@ -54,6 +54,7 @@ struct TherapistCardView: View {
                                     .foregroundColor(Color("text"))
                                 Text(type)
                                     .font(.footnote)
+                                    .foregroundColor(Color("text"))
                                     .fontWeight(.light)
                                 //Remotely
                                 HStack {
@@ -98,50 +99,11 @@ struct TherapistCardView: View {
                 .padding(.top)
             }
             .padding()
-                
-                
-                /*
-                VStack(alignment:.leading) {
-                    //Remotely
-                    HStack {
-                        Capsule()
-                                .fill(Color("Myblue"))
-                                .shadow(color:Color("shadow"), radius: 2, x: 1, y: 1)
-                                .overlay(
-                                    Text("Remotely")
-                                        .font(.footnote)
-                                        .foregroundColor(.white)
-                                )
-                            .frame(maxWidth:75,maxHeight: 30)
-                        Capsule()
-                                .fill(Color("Myblue"))
-                                .shadow(color:Color("shadow"), radius: 2, x: 1, y: 1)
-                                .overlay(
-                                    Text("In person")
-                                        .font(.footnote)
-                                        .foregroundColor(.white)
-                                )
-                            .frame(maxWidth:75,maxHeight: 30)
-                    }
-                    
-                                    
-                    HStack {
-                        Spacer()
-                        Text("Available next Monday").font(.system(size: 10,weight: .bold))
-                            .foregroundColor(Color("text"))
-
-                    }
-                                    
-                }
-                .font(.system(size:12))
-                */
-                //Spacer()
-                
+         
             
             
 
         }
-       // .padding(.horizontal,10)
         
     
     }

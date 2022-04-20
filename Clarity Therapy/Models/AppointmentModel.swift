@@ -11,7 +11,7 @@ import CryptoKit
 struct AppointmentStruct: Identifiable {
     
     var id = UUID()
-    var messageEncrypted : String
+    var messagesEncrypted : EncryptionStruct
     var therapistPublicKey : P256.KeyAgreement.PublicKey
     var clientPublicKey : P256.KeyAgreement.PublicKey
     
