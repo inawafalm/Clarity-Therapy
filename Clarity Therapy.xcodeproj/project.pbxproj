@@ -33,6 +33,9 @@
 		05CB426C27AD377200B9860D /* Clarity_TherapyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB426B27AD377200B9860D /* Clarity_TherapyUITests.swift */; };
 		05CB426E27AD377200B9860D /* Clarity_TherapyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB426D27AD377200B9860D /* Clarity_TherapyUITestsLaunchTests.swift */; };
 		05CB427B27AE914600B9860D /* TherapistCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB427A27AE914600B9860D /* TherapistCardView.swift */; };
+		05E15B662821431400C63B58 /* TherapistAvailbility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E15B652821431400C63B58 /* TherapistAvailbility.swift */; };
+		05F333E5283C23F000EA15F4 /* SignInPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F333E4283C23F000EA15F4 /* SignInPage.swift */; };
+		05F333E82845350700EA15F4 /* SignUpPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F333E72845350700EA15F4 /* SignUpPage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +85,9 @@
 		05CB426B27AD377200B9860D /* Clarity_TherapyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clarity_TherapyUITests.swift; sourceTree = "<group>"; };
 		05CB426D27AD377200B9860D /* Clarity_TherapyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clarity_TherapyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		05CB427A27AE914600B9860D /* TherapistCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TherapistCardView.swift; sourceTree = "<group>"; };
+		05E15B652821431400C63B58 /* TherapistAvailbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TherapistAvailbility.swift; sourceTree = "<group>"; };
+		05F333E4283C23F000EA15F4 /* SignInPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPage.swift; sourceTree = "<group>"; };
+		05F333E72845350700EA15F4 /* SignUpPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +139,7 @@
 		056DD100280F46F200075A53 /* TherapistApp */ = {
 			isa = PBXGroup;
 			children = (
+				05E15B652821431400C63B58 /* TherapistAvailbility.swift */,
 				05A5A6A127FA3649002DE91B /* TherapistView.swift */,
 				056DD101280F47CC00075A53 /* ClientCard.swift */,
 			);
@@ -186,6 +193,7 @@
 			children = (
 				05CB425027AD377100B9860D /* Clarity_TherapyApp.swift */,
 				05A2335227E6333F00C2887D /* AppView.swift */,
+				05F333E6283C23F400EA15F4 /* Signin-Signup */,
 				056DD100280F46F200075A53 /* TherapistApp */,
 				058DD56827EDE72600D47F5C /* Book Group */,
 				052273ED280B518700581B62 /* ViewModel */,
@@ -222,6 +230,15 @@
 				05CB426D27AD377200B9860D /* Clarity_TherapyUITestsLaunchTests.swift */,
 			);
 			path = "Clarity TherapyUITests";
+			sourceTree = "<group>";
+		};
+		05F333E6283C23F400EA15F4 /* Signin-Signup */ = {
+			isa = PBXGroup;
+			children = (
+				05F333E4283C23F000EA15F4 /* SignInPage.swift */,
+				05F333E72845350700EA15F4 /* SignUpPage.swift */,
+			);
+			path = "Signin-Signup";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,9 +373,11 @@
 			files = (
 				05CB425327AD377100B9860D /* ClinicView.swift in Sources */,
 				052273E9280B514600581B62 /* AppointmentModel.swift in Sources */,
+				05E15B662821431400C63B58 /* TherapistAvailbility.swift in Sources */,
 				052273EC280B517F00581B62 /* AppointmentVM.swift in Sources */,
 				05A5A6A227FA3649002DE91B /* TherapistView.swift in Sources */,
 				052273E5280B510500581B62 /* TherapistModel.swift in Sources */,
+				05F333E82845350700EA15F4 /* SignUpPage.swift in Sources */,
 				052273E7280B512400581B62 /* MyUserModel.swift in Sources */,
 				052273EF280B536800581B62 /* TherapistsListVM.swift in Sources */,
 				058DD56527ED1C8C00D47F5C /* DetailView.swift in Sources */,
@@ -368,6 +387,7 @@
 				051A18DF27C0FCE80040C82A /* Styles.swift in Sources */,
 				05A2335327E6333F00C2887D /* AppView.swift in Sources */,
 				051A18DB27BBC7C50040C82A /* nameSensitive.swift in Sources */,
+				05F333E5283C23F000EA15F4 /* SignInPage.swift in Sources */,
 				058DD56727EDDF0300D47F5C /* ConfirmAppointmentView.swift in Sources */,
 				056DD102280F47CC00075A53 /* ClientCard.swift in Sources */,
 				052273F3280B53A800581B62 /* MyUserTherapistVM - TherapistApp.swift in Sources */,

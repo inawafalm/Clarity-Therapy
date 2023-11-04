@@ -8,81 +8,162 @@
 import Foundation
 import SwiftUI
 
-struct ProgressRing_ContentView: View {
-
-@State var progressToggle = false
-@State var progressRingEndingValue: CGFloat = 0.75
-
-var ringColor: Color = Color.green
-var ringWidth: CGFloat = 20
-var ringSize: CGFloat = 200
-
-var body: some View {
-    TabView{
-        NavigationView{
-            VStack{
-
-                Spacer()
-
-                ZStack{
-                    Circle()
-                        .trim(from: 0, to: progressToggle ? progressRingEndingValue : 0)
-                        .stroke(ringColor, style: StrokeStyle(lineWidth: ringWidth, lineCap: .round, lineJoin: .round))
-                        .background(Circle().stroke(ringColor, lineWidth: ringWidth).opacity(0.2))
-                        .frame(width: ringSize, height: ringSize)
-                        .rotationEffect(.degrees(-90.0))
-                        .animation(.easeInOut(duration: 1))
-                        .onAppear() {
-                            self.progressToggle.toggle()
-                        }
-
-                    Text("\(Int(progressRingEndingValue * 100)) %")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                }
-
-                Spacer()
-
-                Button(action: {
-                    self.progressRingEndingValue = CGFloat.random(in: 0...1)
-                }) { Text("Randomize")
-                        .font(.largeTitle)
-                        .foregroundColor(ringColor)
-                }
-
-                Spacer()
-
+struct Testing_ContentView: View {
+    
+    
+    @State var selectedYear = 2021
+    @State var selectedMonth = 0
+    @State var selectedDay = 0
+    @State var availableDates = [["2","10","13","22"],["1","3","4","9"],["20","21","22","23"]]
+    
+    
+    
+    var body: some View {
+        
+        VStack(spacing:25){
+            
+            HStack {
+                Text("2021")
+                    .onTapGesture {
+                        selectedYear = 2021
+                    }
+                Text("2022")
+                    .onTapGesture {
+                        selectedYear = 2022
+                    }
             }
-            .navigationBarTitle("ProgressRing", displayMode: .inline)
-            .navigationBarItems(leading:
-                Button(action: {
-                    print("Refresh Button Tapped")
-                    }) {
-                    Image(systemName: "arrow.clockwise")
-                        .foregroundColor(Color.green)
-                    }, trailing:
-                Button(action: {
-                    print("Share Button Tapped")
-                    }) {
-                    Image(systemName: "square.and.arrow.up")
-                        .foregroundColor(Color.green)
+            
+            Text("Months")
+           
+            ScrollView(.horizontal) {
+                HStack{
+                   // let monthAsNr = Calendar.current.component(.month, from: Date())
+                    
+                ForEach(Array(availableDates.enumerated()),id: \.element){ index , month in
+                    
+                        Button {
+                        
+                            selectedMonth = index
+                            print(selectedMonth)
+                            
+                            let monthName = DateFormatter().monthSymbols[selectedMonth - 1]
+
+                            let dateFormatter: DateFormatter = DateFormatter()
+
+                            let months = dateFormatter.shortMonthSymbols
+                            let monthSymbol = months![selectedMonth-1] as! String // month - from your date components
+
+                            
+                            print(monthSymbol)
+                        
+                                
+                            
+                        } label: {
+
+                            Text("Hi")
+                        }
+                    }
                 }
-            )
+            }
+            
+            
+            /*HStack {
+                HStack {
+                    ForEach(availableDates[selectedMonth],id:\.self) { day in
+                       
+                        
+                        Button {
+
+                            
+                            selectedDay = Int(day)!
+
+                            
+                        } label: {
+                            Text("\(day)")
+                                .font(.callout)
+                                .frame(width: 35,height:10)
+                                .foregroundColor(.white)
+                                .buttonStyle(buttonChoiceStyle(color: "Myblue"))
+                        }
+                    
+                        
+                        }
+                }
+            }
+            */
+            
+            let dateHolding = "\(selectedDay)/\(selectedMonth)/\(selectedYear)"
+            
         }
     }
 }
+
+
+func getDaysInMonth(month: Int, year: Int) -> Int? {
+    let calendar = Calendar.current
+    
+    var startComps = DateComponents()
+    startComps.day = 1
+    startComps.month = month
+    startComps.year = year
+    
+    var endComps = DateComponents()
+    endComps.day = 1
+    endComps.month = month == 12 ? 1 : month + 1
+    endComps.year = month == 12 ? year + 1 : year
+    
+    
+    let startDate = calendar.date(from: startComps)!
+    let endDate = calendar.date(from:endComps)!
+    
+    
+    let diff = calendar.dateComponents([Calendar.Component.day], from: startDate, to: endDate)
+    
+    return diff.day
 }
 
 #if DEBUG
-struct ProgressRing_ContentView_Previews: PreviewProvider {
-static var previews: some View {
-    Group {
-
-        ProgressRing_ContentView()
-            .environment(\.colorScheme, .light)
-            .previewDisplayName("Light Mode")
-
-}
-}
+struct Testing_ContentViewPreviews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            
+            Testing_ContentView()
+                .environment(\.colorScheme, .light)
+                .previewDisplayName("Light Mode")
+            
+        }
+    }
 }
 #endif
+
+extension Formatter {
+    static let yyyMMdd: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "dd/MM/yyyy"
+        return formatter
+    }()
+    
+    static let monthMedium: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "LLL"
+            return formatter
+        }()
+    
+}
+
+
+extension Date {
+    var monthMedium: String  { return Formatter.monthMedium.string(from: self) }
+
+}
+
+
+
+extension String {
+    var yyyMMddToDate: Date? {
+        Formatter.yyyMMdd.date(from: self)
+    }
+}
+

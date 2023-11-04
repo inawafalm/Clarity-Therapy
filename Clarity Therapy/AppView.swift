@@ -13,6 +13,7 @@ import CryptoKit
 struct AppView: View {
     var body: some View {
             TabBarView()
+        //ConfirmAppointmentView(isPresented: .constant(true), confirmView: ConfirmationStruct(clientName: "", clientPhone: "", clientPrivateKeyString: "", therapistName: "", therapistPublicKey: generatePrivateKey().publicKey))
     }
 }
 

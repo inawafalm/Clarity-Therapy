@@ -15,7 +15,7 @@ import CryptoKit
     
     init () {
         myUserClient = [MyUser(name: "Nawaf Almutairi", phone: "786-781-7435", privateKey: exportPrivateKey(P256.KeyAgreement.PrivateKey())),
-                        MyUser(name: "Lisa A.", phone: "305-305-3005", privateKey: exportPrivateKey(P256.KeyAgreement.PrivateKey()))]
+                        MyUser(name: "Moha", phone: "305-305-3005", privateKey: exportPrivateKey(P256.KeyAgreement.PrivateKey()))]
         
     }
     

@@ -14,7 +14,7 @@ import CryptoKit
     @Published var myUserTherapist : [MyUser]
     
     init () {
-        myUserTherapist = [MyUser(name: "Kati", phone: "305-339-3333", privateKey: exportPrivateKey(P256.KeyAgreement.PrivateKey()))]
+        myUserTherapist = [MyUser(name: "Alejandra M.", phone: "305-339-3333", privateKey: exportPrivateKey(P256.KeyAgreement.PrivateKey()))]
     }
     
 }

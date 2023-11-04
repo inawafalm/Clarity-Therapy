@@ -44,7 +44,7 @@ struct ContentView: View {
 
                         
                     } label: {
-                        Text("Lisa")
+                        Text("Moha")
                             .font(.callout)
                             .frame(width: 50)
                             .foregroundColor(.white)
@@ -89,14 +89,14 @@ struct ContentView: View {
                         var data = TherapistModel()
                         data.name = therapistApp.myUserTherapist[0].name
                         data.image = therapistApp.myUserTherapist[0].name
-                        data.type = " Licensed Marriage and Family Therapist"
-                        data.price = "50KD - 60min"
+                        data.type = "Clinical Psychologist"
+                        data.price = "30KD - 60min"
                         data.remotely = true
                         data.inperson = false
-                        data.experience = "5 Years"
+                        data.experience = "4 Years"
                         data.qualifactions = "M.A"
                         data.language = "English"
-                        data.Description = "Kati Morton, LMFT, Master's in Psychology 1M+ on YouTube 2x Best Selling Author (Are u ok? & Traumatized)"
+                        data.Description = "Clinical Psychologist from The University of Miami with 4 years of experience. She is prusing her PhD degree in Mental Health Counsling from UGA"
                         data.therapistPublicKey = try! importPrivateKey(therapistApp.myUserTherapist[0].privateKey).publicKey
                         awsData.therapistsArray.append(data)
                     }
